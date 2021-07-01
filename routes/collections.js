@@ -21,5 +21,24 @@ router.post('/', async (req, res) => {
     } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`); }
     });
+/////////////////////////////////////////////////////// GET all //////////////////////////// 
+router.get('/', async (req, res) => {
+  try {
+    const collections = await Collection.find();
+    return res.send(collections);
+  } catch (ex) {
+return res.status(500).send(`Internal Server Error: ${ex}`); }
+});
+////////////////////////////////////////////////////////////// GET By Id //////////////////////// 
+router.get('/:id', async (req, res) => {
+  try {
+      const collection = await Collection.findById(req.params.id);
+          if (!collection)
+              return res.status(400).send(`The collection with id "${req.params.id}" does not exist.`);
+    return res.send(collection);
+} catch (ex) {
+return res.status(500).send(`Internal Server Error: ${ex}`);
+}
+}); 
 ///////////////////////////////////////////////////////////////////////////////////////////////// 
 module.exports = router;
